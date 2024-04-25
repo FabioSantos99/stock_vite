@@ -1,0 +1,267 @@
+/* Geral */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Helvetica;
+  color: #fff;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 2.4rem;
+}
+
+body {
+  background-color: #000;
+}
+
+
+select {
+  color: #000;
+}
+
+option {
+  background-color: #000;
+  font-weight: bolder;   
+}
+
+input, select {
+  margin: 10px 5px;
+  padding: 10px 6px;
+  text-align: center;
+  border: 2px groove #898787;
+  color: #000;
+
+}
+
+h3 {
+  font-weight: bolder ;
+}
+
+/* Product container */
+
+.pdt-container {
+  position: relative;
+  max-width: 700px;
+  margin: 2rem auto 0;
+  background-color: #111111;
+  padding: 1rem;
+  border: 1px solid #454444;
+  border-radius: 25px;
+  height: fit-content;
+  box-shadow: 5px 6px 7px #959393;
+}
+
+.pdt-container header {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #898585; 
+}
+
+#stock-form {
+  display: flex;
+  
+}
+
+
+.add{ 
+  width: 100px;
+  height: 60px;
+  color: rgb(6, 6, 6);
+  border-radius: 10px;
+  font-weight: bolder;
+  font-size: 21px;
+  padding: 10px;
+  background: linear-gradient(
+        40deg,
+        rgb(70, 70, 70) 0%,
+        rgb(254, 253, 255) 100%
+      );
+}
+
+.add:hover {
+  background: linear-gradient(
+        40deg,
+        rgb(254, 253, 255) 0%,
+        rgb(70, 70, 70) 100%
+      );
+}
+
+.add > i {
+  color: #000;
+  font-weight: bolder;
+}
+
+#export {
+  background-color: #121212;
+  border-radius: 10px;
+  transition: .5s;
+  color: #fff;
+  font-size: large;
+  font-weight: 900;
+  background-color: transparent; 
+  padding: 5px;
+}
+
+#export i {
+  color: #000;
+}
+
+#export:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+/* Stock Form */
+#stock-form {
+  padding: 1rem;
+}
+
+.form-control {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.form-control input {
+  font-size: 18px;
+  padding: 4px;
+  margin-right: 2.3rem;
+}
+
+/* Todo toolbar */
+
+#toolbar {
+  display: flex;
+  justify-content: space-between;
+  margin: 3rem 1rem;
+}
+
+#toolbar input {
+  height: 40px;
+  
+}
+
+#toolbar select {
+  margin-top: 15px;
+}
+
+.bi-backspace{
+  color: #fff;
+  font-size: 25px;
+  background-color: #000;
+  border: none;
+}
+
+/* Edit Form */
+
+
+#edit-table {
+  position: absolute;
+  border: 1px solid #545353;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 1px 2px 100px 1000px #000000ca;
+  background-color: #000;
+  left: 100px;
+  
+}
+
+#edit-table > form {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  text-align: center;
+  
+}
+
+#cancel-edit-btn {
+  margin-left: 100px;
+  margin-top: 15px;
+  height: 40px;
+  width: 200px;
+  color: #000;
+  font-weight: bolder;
+  padding: 5px;
+  border-radius: 10px;
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+#cancel-edit-btn:hover {
+  color: #fff;
+  background-color: #000;
+
+}
+
+#submit {
+  width: 100px;
+  font-size: 50px;
+  margin: auto;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+#submit:hover {
+  border: 1px solid #fff;
+}
+
+
+
+
+.hide {
+  display: none;
+  animation: moveIn .3s ease-in;
+}
+
+@keyframes moveIn { 
+  0% {
+        opacity: 0;
+        transform: translateY(-16rem);
+  }
+
+  100% {
+        opacity: 1;
+        transform: translateY(5);
+  }   
+}
+
+/* Product List */
+table {
+  border-collapse:collapse;
+}
+
+th, td {
+  border-bottom: 1px solid #fff;
+  padding: 10px;
+  width: 180px;
+  text-align: center;
+}
+
+td > button {
+  height: 30px;
+  border-style: groove;
+  transition: .5s;
+  font-size: 13px;
+}
+
+.delete-item,
+.edit-item  {
+  font-size: 21px;
+  padding: 6px;
+  color: #767474;
+  transition: .4s;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background-color: transparent;     
+}
+
+.delete-item:hover,
+.edit-item:hover{
+  padding: 6px;
+  color: #fff;
+  text-decoration:underline ;
+}
