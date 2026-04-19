@@ -4,9 +4,11 @@ const names = document.querySelector("#name");
 const price = document.querySelector("#price");
 const quantity = document.querySelector("#quantity");
 const typePdt = document.querySelector("#typePdt");
-const allInput = document.querySelectorAll(".prodInput");
 const pdtList = document.querySelector("#product-list");
 const stockForm = document.querySelector("#stock-form");
+
+const isValidPrice = (value) => !isNaN(parseFloat(value)) && isFinite(value) && parseFloat(value) >= 0;
+const isValidQuantity = (value) => Number.isInteger(Number(value)) && Number(value) >= 0;
 
 // Functions
 export const putProducts = (nameInput, priceInput, quantityInput, typePdtInput, save = 1) => {
