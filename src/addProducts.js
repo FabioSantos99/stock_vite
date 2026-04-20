@@ -14,38 +14,39 @@ const isValidQuantity = (value) => Number.isInteger(Number(value)) && Number(val
 export const putProducts = (nameInput, priceInput, quantityInput, typePdtInput, save = 1) => {
       
       const product = document.createElement('tr');
-      product.classList.add("prod");
+      product.classList.add("prod", `${typePdtInput}`);
 
 
       const nameTitle = document.createElement('td');
-      nameTitle.innerText = nameInput;
-      product.classList.add(`${typePdtInput}`);
+      nameTitle.textContent = nameInput;
       product.appendChild(nameTitle);
 
       const priceTitle = document.createElement('td');
-      priceTitle.innerText = priceInput;
+      priceTitle.textContent = priceInput;
       product.appendChild(priceTitle);
 
       const quantityTitle = document.createElement('td');
-      quantityTitle.innerText = quantityInput;
+      quantityTitle.textContent = quantityInput;
       product.appendChild(quantityTitle);
 
       const typeTitle = document.createElement('td');
-      typeTitle.innerText = typePdtInput;
+      typeTitle.textContent = typePdtInput;
       product.appendChild(typeTitle);
 
-      const td1 = document.createElement("td")
-      const editBtn = document.createElement("button")
-      td1.appendChild(editBtn);
-      editBtn.classList.add("edit-item")
+      const td1 = document.createElement("td");
+      const editBtn = document.createElement("button");
+      editBtn.type = "button";
+      editBtn.classList.add("edit-item");
       editBtn.innerHTML = 'Edit'
+      td1.appendChild(editBtn);
       product.appendChild(td1);
 
-      const td2 = document.createElement("td")
-      const deleteBtn = document.createElement("button")
-      td2.appendChild(deleteBtn)
-      deleteBtn.classList.add("delete-item")
-      deleteBtn.innerHTML = 'Delete'
+      const td2 = document.createElement("td");
+      const deleteBtn = document.createElement("button");
+      deleteBtn.type = "button";
+      deleteBtn.classList.add("delete-item");
+      deleteBtn.innerHTML = 'Delete';
+      td2.appendChild(deleteBtn);
       product.appendChild(td2);
 
       pdtList.appendChild(product);
@@ -58,18 +59,23 @@ export const putProducts = (nameInput, priceInput, quantityInput, typePdtInput, 
 stockForm.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const nameInput = names.value;
-      const priceInput = price.value;
-      const quantityInput = quantity.value;
+      const nameInput = names.value.trim();
+      const priceInput = price.value.trim();
+      const quantityInput = quantity.value.trim();
       const typePdtInput = typePdt.value;
+      
+      if(!nameInput) return alert("Por favor! Digite um nome de produto válido");
+      if(!isValidPrice(priceInput)) return alert("Por favor! Digite um preço válido");
+      if(!isValidPrice(quantityInput)) return alert("Por favor! Digite um apenas numeros");
+      if(!typePdtInput) return alert("Por favor! Selecione um tipo de produto");
 
       const formatPrice = parseFloat(priceInput).toFixed(2);
 
-      if (nameInput && priceInput && quantityInput && typePdtInput) {
-            putProducts(nameInput, formatPrice, quantityInput, typePdtInput)
-            names.value = "";
-            price.value = "";
-            quantity.value = "";
-            typePdt.value = "";
-      }    
+      putProducts(nameInput, formatPrice, quantityInput, typePdtInput);
+
+      name.value= "";
+      price.value = "";
+      quantity.value = "";
+      typePdt.value = "";
+
 });

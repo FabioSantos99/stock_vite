@@ -6,16 +6,23 @@ const editPrice = document.querySelector("#edit-price");
 const editQuantiy = document.querySelector("#edit-quantity");
 const editType = document.querySelector("#edit-type");
 const cancelBtnEdit = document.querySelector("#cancel-edit-btn");
-let editingInput = null;
-let oldValues;
+const editForm = editTable.querySelector("form")
 
-export const editAndSaveProduct = (oldName, newName, newPrice, newQuantity, newType) => {
+let editingRow = null;
+let oldName = null;
+
+const isValidePrice = (value) => !isNaN(parseFloat(value)) && isFinite(value) & parseFloat(value) >= 0;
+const isValidQuantity = (value) => Number.isInteger(Number(value)) && Number(value) >= 0;
+
+export const editAndSaveProduct = (oldNameVal, newName, newPrice, newQuantity, newType) => {
+
       const products = getProductsLocalStorage();
 
-      const editedProductIndex = products.findIndex((prod) => prod.nameInput === oldName);
+      const index = products.findIndex((prod) => prod.nameInput === oldNameVal);
 
-      if (editedProductIndex !== -1) {
-            products[editedProductIndex] = {
+      if (index !== -1) {
+
+            products[index] = {
                   nameInput: newName,
                   priceInput: newPrice,
                   quantityInput: newQuantity,
@@ -24,67 +31,91 @@ export const editAndSaveProduct = (oldName, newName, newPrice, newQuantity, newT
 
             localStorage.setItem("products", JSON.stringify(products));
       }
+};
+
+const openEditTable = () => {
+      editTable.style.display = "block";
 }
+
+const closeEditTable = () => {
+      editTable.style.display = "none";
+      editingRow = null;
+      oldName = null;
+}
+
 
 document.addEventListener("click", (e) => {
       
-      const prodList = e.target.closest(".prod")
+      const prodRow = e.target.closest(".prod")
 
-      if(e.target.classList.contains("edit-item")) {
-            editingInput = prodList;
-            const currentName = prodList.querySelector("td:nth-child(1)").innerText.trim();
+      if(e.target.classList.contains("edit-item") && prodRow) {
+            editingRow = prodRow;
 
-            const currentPrice = prodList.querySelector("td:nth-child(2)").innerText.trim();
+            const currentName = prodRow.querySelector("td:nth-child(1)").innerText.trim();
 
-            const currentQuantity = prodList.querySelector("td:nth-child(3)").innerText.trim();
+            const currentPrice = prodRow.querySelector("td:nth-child(2)").innerText.trim();
 
-            const currentType = prodList.querySelector("td:nth-child(4)").innerText.trim();
+            const currentQuantity = prodRow.querySelector("td:nth-child(3)").innerText.trim();
 
-            oldValues = currentName;
+            const currentType = prodRow.querySelector("td:nth-child(4)").innerText.trim();
+
+            oldName = currentName;
             editName.value = currentName;
             editPrice.value = currentPrice;
             editQuantiy.value = currentQuantity;
             editType.value = currentType;
-            editTable.style.display = 'block';
 
-      } else if (e.target.classList.contains("delete-item")) {
-            const productName = prodList.querySelector("td:nth-child(1)").textContent;
+            openEditTable();
 
-            // Remover Produto
+      } else if (e.target.classList.contains("delete-item") && prodRow) {
+            const productName = prodRow.querySelector("td:nth-child(1)").textContent.trim();
+
+            // Remove Product
             removeLocalStorageProduct(productName);
-            prodList.remove();
+            prodRow.remove();
       }
-})
+});
 
 
 cancelBtnEdit.addEventListener("click", () => {
-      // Oculta a tabela de edição
-      editTable.style.display = "none";
+      // hidden edit table
+      closeEditTable()
   });
 
 editTable.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      const editedName = editName.value;
-      const editedPrice = editPrice.value;
-      const editedQuantity = editQuantiy.value;
+      const editedName = editName.value.trim();
+      const editedPrice = editPrice.value.trim();
+      const editedQuantity = editQuantiy.value.trim();
       const editedType = editType.value;
+
+      if (!editedName) return alert("Por favor. Digite o nome do produto");
+
+      if (!isValidePrice(editedPrice)) return alert("Por favor. Digite o preço do produto");
+
+      if (!isValidQuantity(editedQuantity)) return alert("Por favor. Digite a quantidade do produto");
+
+      if (!editedType) return alert("Por favor. Selecione o tipo do produto")
+
 
       const formatEditPrice = parseFloat(editedPrice).toFixed(2);
 
 
-      if (editedName && editedPrice && editedQuantity && editedType && editingInput) {
+      
             // Update the text in the original item
-            editingInput.querySelector("td:nth-child(1)").textContent = editedName;
-            editingInput.querySelector("td:nth-child(2)").textContent = formatEditPrice;
-            editingInput.querySelector("td:nth-child(3)").textContent = editedQuantity;
-            editingInput.querySelector("td:nth-child(4)").textContent = editedType;
+            editingRow.querySelector("td:nth-child(1)").textContent = editedName;
 
-            const oldName = oldValues;
-            editAndSaveProduct(oldName, editedName, editedPrice, editedQuantity, editedType);
+            editingRow.querySelector("td:nth-child(2)").textContent = formatEditPrice;
 
-            // Clear the editing variable and hide the edit form
-            editingInput = null;
-            editTable.style.display = "none";
-      }
+            editingRow.querySelector("td:nth-child(3)").textContent = editedQuantity;
+
+            editingRow.querySelector("td:nth-child(4)").textContent = editedType;
+
+            editingRow.className = `prod ${editedType}`;
+
+            editAndSaveProduct(oldName, editedName, formatEditPrice, editedQuantity, editedType);
+
+           closeEditTable();
+      
 });

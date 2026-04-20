@@ -1,11 +1,8 @@
 import { loadProducts } from "./src/loadProducts";
-import { filterProducts } from "./src/filter";
-import { getSearchProducts } from "./src/search";
-import { editAndSaveProduct } from "./src/editProd";
+import "./src/filter"
+import "./src/search";
+import "./src/editProd";
+import "./src/savings";
 
-   
 loadProducts();
-filterProducts();
-getSearchProducts();
-editAndSaveProduct();
-exportData();
+

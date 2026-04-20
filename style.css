@@ -56,7 +56,7 @@ body {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 2px;
-  background: liner-gradiente(90deg, transparent, var(--text-muted), transparent);
+  background: linear-gradient(90deg, transparent, var(--text-muted), transparent);
 }
 
 .pdt-container header {
@@ -72,7 +72,7 @@ h1 {
   font-family: var(--font-mono);
   font-size: 1.5rem;
   font-weight: 500;
-  letter-spacing: 0.12rem;
+  letter-spacing: 0.20em;
   text-transform: uppercase;
   color: var(--text);
 }
@@ -91,7 +91,7 @@ h1 {
   color: var(--text-muted);
   background: transparent;
   border: 1px solid var(--border);
-  border-radius: 1px solid var(--radius);
+  border-radius: var(--radius);
   cursor: pointer;
   transition: color var(--transition), border-color var(--transition), background var(--transition);
 }
@@ -238,7 +238,7 @@ table {
 thead th {
   font-family: var(--font-mono);
   font-size: 0.68rem;
-  letter-spacing: 0.12rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-muted);
   text-align: left;
@@ -288,14 +288,16 @@ td:nth-child(4) {
   letter-spacing: 0.1em;
 }
 
-td:nth-child(5), td:nth-child(6) {
+td:nth-child(5), 
+td:nth-child(6) {
   width: 64px;
   text-align: center;
 }
 
 /* Row action butttons */
 
-.edit-item, .delete-item {
+.edit-item, 
+.delete-item {
   font-family: var(--font-mono);
   font-size: 0.68rem;
   letter-spacing: 0.06em;

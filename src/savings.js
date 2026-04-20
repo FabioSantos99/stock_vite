@@ -8,17 +8,23 @@ export const saveLocalStorageProduct = (prod) => {
 export const getProductsLocalStorage = () => {
       
       const storedProducts = localStorage.getItem("products");
-      const products = storedProducts ? JSON.parse(storedProducts) : [];
-    
-      return products;
+      return storedProducts ? JSON.parse(storedProducts) : [];
 }
 
 export const removeLocalStorageProduct = (productName) => {
-      const products = getProductsLocalStorage();
 
+      const products = getProductsLocalStorage();
       const filteredProds = products.filter((prod) => prod.nameInput !== productName);
 
       localStorage.setItem("products", JSON.stringify(filteredProds))
+}
+
+const sanitizeCsvValue = (value) => {
+      const str = String(value ?? "");
+      if(str.includes(",") || str.includes("\n") || str.includes('"')) {
+            return `"${str.replace(/"/g, '""')}"`;
+      }
+      return str;
 }
 
 
@@ -30,15 +36,22 @@ export function exportData() {
 
       const csvString = [
             ["Name", "Price", "Quantity", "Type"],
-            ...notes.map((prod) => [prod.nameInput, prod.priceInput, prod.quantityInput, prod.typePdtInput]),
-      ].map((e) => e.join(","))
+            ...notes.map((prod) => 
+            [
+            prod.nameInput, 
+            prod.priceInput, 
+            prod.quantityInput, 
+            prod.typePdtInput
+            ]),
+      ]
+      .map((row) => row.map(sanitizeCsvValue).join(","))
       .join("\n");
-      const element = document.createElement("a")
+
+      const element = document.createElement("a");
       element.href = "data:text/csv;charset=utf-8," + encodeURI(csvString);
 
-      element.target = "blank";
+      element.target = "_blank";
       element.download ="products.csv";
-
       element.click();
 }
 

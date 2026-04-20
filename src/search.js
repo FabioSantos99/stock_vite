@@ -1,23 +1,15 @@
-
 const searchInput = document.querySelector("#search-input");
 
 export const getSearchProducts = (search) => {
       const products = document.querySelectorAll(".prod");
+      const normalizedSearch = search.toLowerCase().trim();
 
       products.forEach((prod) => {
-            let prodTitle = prod.querySelector("td").innerText.toLowerCase();
-
-            const normalizedSearch = search.toLowerCase();
-
-            prod.style.display = "";
-
-            if (!prodTitle.includes(normalizedSearch)) {
-                  prod.style.display = "none";
-            }
-      })
-}
+            const prodTitle = prod.querySelector("td").textContent.toLowerCase();
+            prod.style.display = prodTitle.includes(normalizedSearch) ? "" : "none";
+      });
+};
 
 searchInput.addEventListener("keyup", (e) => {
-      const search = e.target.value;
-      getSearchProducts(search);
+      getSearchProducts(e.target.value);
 })
