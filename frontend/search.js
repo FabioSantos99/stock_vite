@@ -12,4 +12,4 @@ export const getSearchProducts = (search) => {
 
 searchInput.addEventListener("keyup", (e) => {
       getSearchProducts(e.target.value);
-})
+});

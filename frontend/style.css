@@ -9,8 +9,8 @@
   --text:      #e8e8e8;
   --text-muted:#7a7a7a;
   --accent:    #e8e8e8;
-  --danger:    #c0392b;
-  --danger-hi: #e74c3c;
+  --danger:    #ff1c02;
+  --danger-hi: #862216;
   --radius:    6px;
   --font-mono: 'DM Mono', 'Fira Mono', 'Courier New', monospace;
   --font-sans: 'DM Sans', 'Helvetica Neue', Helvetica, sans-serif;
@@ -42,7 +42,7 @@ body {
 /* Container */
 .pdt-container {
   position: relative;
-  max-width: 760px;
+  max-width: 1260px;
   margin: 0 auto;
   background-color: var(--surface);
   border: 1px solid var(--border);
@@ -56,7 +56,7 @@ body {
   position: absolute;
   top: 0; left: 0; right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--text-muted), transparent);
+  background: linear-gradient(120deg, transparent, var(--text-muted), transparent);
 }
 
 .pdt-container header {
@@ -94,6 +94,11 @@ h1 {
   border-radius: var(--radius);
   cursor: pointer;
   transition: color var(--transition), border-color var(--transition), background var(--transition);
+}
+
+#export:hover {
+  background-color: var(--border-hi);
+  transition: .8s;
 }
 
 #export i {
@@ -172,7 +177,7 @@ option {
   gap: 0.3rem;
   padding: 0.55rem 1.1rem;
   font-family: var(--font-mono);
-  font-size: 0.8rem;
+  font-size: 1rem;
   font-weight: 500;
   letter-spacing: 0.06em;
   color: var(--bg);
@@ -237,7 +242,7 @@ table {
 
 thead th {
   font-family: var(--font-mono);
-  font-size: 0.68rem;
+  font-size: 1rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--text-muted);
@@ -265,26 +270,26 @@ tbody tr.prod:hover {
 
 td {
   padding: 0.75rem;
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: var(--text);
   vertical-align: middle;
 }
 
 td:nth-child(2) {
   font-family: var(--font-mono);
-  font-size: 0.82rem;
-  color: var(--text-muted);
+  font-size: 1rem;
 }
 
 td:nth-child(3) {
   font-family: var(--font-mono);
-  font-size: 0.82rem;
+  font-size: 1rem;
+
 }
 
 td:nth-child(4) {
   text-transform: uppercase;
   font-family: var(--font-mono);
-  font-size: 0.65rem;
+  font-size: 0.75rem;
   letter-spacing: 0.1em;
 }
 
@@ -315,10 +320,11 @@ td:nth-child(6) {
   border-color: var(--border);
 }
 
-.edit-item_hover {
+.edit-item:hover {
   color: var(--text);
   border-color: var(--border-hi);
-  background: var(--surface2);
+  background: rgb(2, 4, 27);
+  font-weight: 800;
 }
 
 .delete-item {
