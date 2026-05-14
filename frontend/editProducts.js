@@ -54,7 +54,7 @@ editForm.addEventListener("submit", async (e) => {
 
       const name = editName.value.trim();
       const price = editPrice.value.trim();
-      const quantity = quantity.value.trim();
+      const quantity = editQuantity.value.trim();
       const type = editType.value;
 
       if (!name) return alert("Por favor. Digite o nome do produto");
