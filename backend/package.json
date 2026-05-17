@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "test": "vitest"
   },
   "dependencies": {
     "better-sqlite3": "^9.4.3",
@@ -13,7 +14,9 @@
   },
   "description": "",
   "main": "database.js",
-  "devDependencies": {},
+  "devDependencies": {
+    "vitest": "^4.1.6"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC"

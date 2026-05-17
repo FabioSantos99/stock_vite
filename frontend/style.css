@@ -61,7 +61,7 @@ body {
 /* ── Container ──────────────────────────────────────────────── */
 .pdt-container {
   position: relative;
-  max-width: 760px;
+  max-width: 1060px;
   margin: 0 auto;
   background-color: var(--surface);
   border: 1px solid var(--border);
@@ -75,7 +75,7 @@ body {
   content: '';
   position: absolute;
   top: 0; left: 0; right: 0;
-  height: 2px;
+  height: 5px;
   background: linear-gradient(90deg, transparent, var(--text-muted), transparent);
 }
 
@@ -91,7 +91,7 @@ body {
 
 h1 {
   font-family: var(--font-mono);
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
