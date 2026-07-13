@@ -1,17 +1,52 @@
 import express from "express";
 import cors from "cors";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import {
   getAllProducts,
   insertProduct,
   deleteProduct,
   updateProduct,
+  createUser,
+  findUserByUsername,
+  getAllUsers,
+  deleteUser,
 } from "./database.js";
+import { authenticate, isAdmin, JWT_SECRET } from "./auth.js";
 
 const app = express();
 const PORT = 3000;
 
 app.use(cors());
 app.use(express.json());
+
+// ------------ POST /auth/login
+
+app.post("auth/login", async (req, res) => {
+  const { username, password } = req.body;
+
+  if(!username || !password) {
+    return res.status(400).json({ error: "Username e password são obrigatórios." });
+  }
+
+  const user = findUserByUsername(username);
+
+  if(!user) {
+    return res.status(401).json({ error: "Credenciais inválidas." });
+  }
+
+  const passwordMatch = await bcrypt.compare(password, user.password);
+
+  if(!passwordMatch) {
+    return res.status(401).json({ error: "Credenciais inválidas"});
+  }
+
+  const token = jwt.sign(
+    { id: user.id, username: user.username, role: user.role },
+    JWT_SECRET,
+    { expiresIn: "8h"}
+  )
+})
 
 // ── GET /products — busca todos os produtos ───────────────────
 app.get("/products", (req, res) => {
