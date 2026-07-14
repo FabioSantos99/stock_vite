@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock — Login</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .login-container {
+      max-width: 360px;
+      margin: 8rem auto 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+    }
+
+    .login-container h1 {
+      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+    }
+
+    .login-container input {
+      width: 100%;
+      margin-bottom: 0.75rem;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 0.65rem;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      letter-spacing: 0.06em;
+      color: var(--bg);
+      background: var(--text);
+      border: 1px solid var(--text);
+      border-radius: var(--radius);
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.18s ease, color 0.18s ease;
+    }
+
+    .login-btn:hover {
+      background: transparent;
+      color: var(--text);
+    }
+
+    #login-error {
+      color: var(--danger);
+      font-size: 0.8rem;
+      margin-top: 0.75rem;
+      display: none;
+      font-family: var(--font-mono);
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h1>STOCK</h1>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button class="login-btn" id="login-btn">Entrar</button>
+    <p id="login-error"></p>
+  </div>
+  <script type="module" src="login.js"></script>
+</body>
+</html>

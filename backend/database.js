@@ -21,49 +21,50 @@ db.exec(`
   )
 `);
 
-// Products
+// ── Products ──────────────────────────────────────────────────
 
 export const getAllProducts = () => {
-    return db.prepare("SELECT * FROM products").all();
+  return db.prepare("SELECT * FROM products").all();
 };
 
 export const insertProduct = (name, price, quantity, type) => {
-    const stmt = db.prepare(
-        "INSERT INTO products (name, price, quantity, type) VALUES (?, ?, ?, ?)"
-    );
-    const result = stmt.run(name, price, quantity, type);
-    return result.lastInsertRowid;
+  const stmt   = db.prepare(
+    "INSERT INTO products (name, price, quantity, type) VALUES (?, ?, ?, ?)"
+  );
+  const result = stmt.run(name, price, quantity, type);
+  return result.lastInsertRowid;
 };
 
 export const deleteProduct = (id) => {
-    return db.prepare("DELETE FROM products WHERE id = ?").run(id);
+  return db.prepare("DELETE FROM products WHERE id = ?").run(id);
 };
 
 export const updateProduct = (id, name, price, quantity, type) => {
-    return db.prepare( "UPDATE products SET name = ?, price = ?, quantity = ?, type = ? WHERE id = ?").run(name, price, quantity, type, id);
+  return db
+    .prepare(
+      "UPDATE products SET name = ?, price = ?, quantity = ?, type = ? WHERE id = ?"
+    )
+    .run(name, price, quantity, type, id);
 };
 
-// ------ USERS ------------
+// ── Users ─────────────────────────────────────────────────────
 
 export const createUser = (username, hashedPassword, role) => {
-    
-    const stmt = db.prepare(
-        "INSERT INTO users (username, password, role) VALUES (?, ?, ?)"
-    );
-
-    const result = stmt.run(username, hashedPassword, role);
-    return result.lastInsertRowid;
+  const stmt   = db.prepare(
+    "INSERT INTO users (username, password, role) VALUES (?, ?, ?)"
+  );
+  const result = stmt.run(username, hashedPassword, role);
+  return result.lastInsertRowid;
 };
 
 export const findUserByUsername = (username) => {
-    return db.prepare('SELECT * FROM users WHERE username = ?').get(username);
+  return db.prepare("SELECT * FROM users WHERE username = ?").get(username);
 };
 
 export const getAllUsers = () => {
-    return db.prepare("SELECT id, username, role FROM users").all();
+  return db.prepare("SELECT id, username, role FROM users").all();
 };
 
 export const deleteUser = (id) => {
-    return db.prepare("DELETE FROM users WHERE id = ?").run(id);
+  return db.prepare("DELETE FROM users WHERE id = ?").run(id);
 };
-
