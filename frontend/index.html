@@ -4,22 +4,25 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stock Shop</title>
-  <link rel="shortcut icon" href="img/inventory.png" type="image/x-icon">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="style.css">
+  <!-- main.js carrega primeiro, authGuard verifica o token depois -->
+  <script type="module" src="main.js"></script>
+  <script type="module" src="auth-guard.js"></script>
+  <script type="module" src="theme.js"></script>
 </head>
-<body class="opacity">
+<body>
   <div class="pdt-container">
     <header>
-      <h1>Stock</h1>
-      <span id="user-info" style="font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted);"></span>
+      <h1>Electronics Stock</h1>
+      <span id="user-info"></span>
       <div class="header-actions">
         <button type="button" id="logout-btn" title="Logout"><i class="bi bi-box-arrow-right"></i></button>
+        <a href="users.html" id="users-btn"><i class="bi bi-people"></i> Users</a>
         <button type="button" id="theme-toggle" title="Toggle theme"><i class="bi bi-sun"></i></button>
-        <!-- input escondido que abre o seletor de arquivo -->
         <input type="file" id="import-input" accept=".xlsx, .xls, .csv" style="display:none" />
         <button type="button" id="import">Import <i class="bi bi-upload"></i></button>
         <button type="button" id="export">Export CSV <i class="bi bi-download"></i></button>
@@ -45,9 +48,9 @@
     <div id="edit-table" class="hide">
       <form>
         <h3>Edit Product:</h3>
-        <input type="text" id="edit-name" placeholder="Edit name">
-        <input type="text" id="edit-price" placeholder="Edit price">
-        <input type="text" id="edit-quantity" placeholder="Edit quantity">
+        <input type="text" id="edit-name" placeholder="edit name">
+        <input type="text" id="edit-price" placeholder="edit price">
+        <input type="text" id="edit-quantity" placeholder="edit quantity">
         <select name="type" id="edit-type">
           <option value="">Type pdt</option>
           <option value="phone">Phone</option>
@@ -56,9 +59,7 @@
           <option value="tv">TV</option>
         </select>
         <div class="edit-actions">
-          <!-- type="submit" so the form's submit event fires correctly -->
           <button type="submit" id="submit">Confirm <i class="bi bi-check-square-fill"></i></button>
-          <!-- type="button" prevents this from submitting the form -->
           <button type="button" id="cancel-edit-btn">Cancel</button>
         </div>
       </form>
@@ -95,11 +96,5 @@
       <tbody id="product-list"></tbody>
     </table>
   </div>
-
-  <script type="module" src="main.js"></script>
-  <script type="module" src="auth-guard.js"></script>
-  <script type="module" src="theme.js"></script>
-
-  </body>
+</body>
 </html>
-

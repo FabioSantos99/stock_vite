@@ -229,6 +229,7 @@ option {
   align-items: center;
   gap: 0.3rem;
   padding: 0.55rem 1.1rem;
+  margin-top: 15px;
   font-family: var(--font-mono);
   font-size: 0.8rem;
   font-weight: 500;
@@ -497,6 +498,42 @@ td:nth-child(6) {
   display: none;
 }
 
+/* ── Back / Users button ─────────────────────────────────────── */
+.back-btn,
+#logout-btn,
+#import,
+#users-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  text-decoration: none;
+  transition: color var(--transition), border-color var(--transition), background var(--transition);
+}
+
+.back-btn:hover,
+#logout-btn:hover,
+#import:hover,
+#users-btn:hover {
+  color: var(--text);
+  border-color: var(--border-hi);
+  background: var(--surface2);
+}
+
+#import i {
+  color: inherit;
+  font-size: 0.85rem;
+}
+
 /* ── Responsive ─────────────────────────────────────────────── */
 @media (max-width: 560px) {
   .pdt-container {
@@ -532,31 +569,4 @@ td:nth-child(6) {
   }
 }
 
-/* ── Import button ──────────────────────────────────────────── */
-#import {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.45rem 0.9rem;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  background: transparent;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  cursor: pointer;
-  transition: color var(--transition), border-color var(--transition), background var(--transition);
-}
 
-#import i {
-  color: inherit;
-  font-size: 0.85rem;
-}
-
-#import:hover {
-  color: var(--text);
-  border-color: var(--border-hi);
-  background: var(--surface2);
-}

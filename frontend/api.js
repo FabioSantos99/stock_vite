@@ -1,32 +1,28 @@
 const BASE_URL = "http://localhost:3000";
 
-// ── Envia o token JWT em toda requisição ──────────────────────
+// Envia o token JWT em toda requisição
 const authHeaders = () => ({
   "Content-Type": "application/json",
   Authorization: `Bearer ${localStorage.getItem("token")}`,
 });
 
-// ── Se receber 401, redireciona para login ────────────────────
+// Se receber 401 limpa o localStorage e redireciona para login
 const handleUnauthorized = (res) => {
   if (res.status === 401) {
     localStorage.removeItem("token");
     localStorage.removeItem("role");
     localStorage.removeItem("username");
-    window.location.href = "index.html";
+    window.location.href = "login.html";
   }
 };
 
-// ── Buscar todos os produtos ──────────────────────────────────
 export const getAllProducts = async () => {
-  const res = await fetch(`${BASE_URL}/products`, {
-    headers: authHeaders(),
-  });
+  const res = await fetch(`${BASE_URL}/products`, { headers: authHeaders() });
   handleUnauthorized(res);
   if (!res.ok) throw new Error("Erro ao buscar produtos.");
   return res.json();
 };
 
-// ── Salvar produto ────────────────────────────────────────────
 export const saveProduct = async ({ name, price, quantity, type }) => {
   const res = await fetch(`${BASE_URL}/products`, {
     method:  "POST",
@@ -38,7 +34,6 @@ export const saveProduct = async ({ name, price, quantity, type }) => {
   return res.json();
 };
 
-// ── Remover produto ───────────────────────────────────────────
 export const removeProduct = async (id) => {
   const res = await fetch(`${BASE_URL}/products/${id}`, {
     method:  "DELETE",
@@ -49,7 +44,6 @@ export const removeProduct = async (id) => {
   if (!res.ok) throw new Error("Erro ao remover produto.");
 };
 
-// ── Atualizar produto ─────────────────────────────────────────
 export const updateProduct = async (id, { name, price, quantity, type }) => {
   const res = await fetch(`${BASE_URL}/products/${id}`, {
     method:  "PUT",
@@ -61,7 +55,14 @@ export const updateProduct = async (id, { name, price, quantity, type }) => {
   return res.json();
 };
 
-// ── Exportar CSV ──────────────────────────────────────────────
+export const logout = () => {
+  localStorage.removeItem("token");
+  localStorage.removeItem("role");
+  localStorage.removeItem("username");
+  window.location.href = "login.html";
+};
+
+// Exportar CSV
 const sanitizeCsvValue = (value) => {
   const str = String(value ?? "");
   if (str.includes(",") || str.includes("\n") || str.includes('"')) {
@@ -72,7 +73,6 @@ const sanitizeCsvValue = (value) => {
 
 export const exportData = async () => {
   const products = await getAllProducts();
-
   const csvString = [
     ["Name", "Price", "Quantity", "Type"],
     ...products.map((p) => [p.name, p.price, p.quantity, p.type]),
@@ -87,15 +87,8 @@ export const exportData = async () => {
   element.click();
 };
 
-// ── Logout ────────────────────────────────────────────────────
-export const logout = () => {
-  localStorage.removeItem("token");
-  localStorage.removeItem("role");
-  localStorage.removeItem("username");
-  window.location.href = "login.html";
-};
-
+// Só registra o listener se o botão existir (não existe na página de login)
 const exportBtn = document.querySelector("#export");
-if(exportBtn) {
+if (exportBtn) {
   exportBtn.addEventListener("click", () => exportData());
 }
