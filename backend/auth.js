@@ -1,6 +1,8 @@
+import "dotenv/config"; 
 import jwt from "jsonwebtoken";
 
-export const JWT_SECRET = "troque_por_uma_chave_secreta_forte";
+
+export const JWT_SECRET = process.env.JWT_SECRET || "uma_senha_forte";
 
 // Verifica se o token JWT é válido
 export const authenticate = (req, res, next) => {

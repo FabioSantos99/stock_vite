@@ -1,3 +1,5 @@
+import "dotenv/config";
+
 import express from "express";
 import cors from "cors";
 import bcrypt from "bcrypt";
@@ -15,7 +17,7 @@ import {
 import { authenticate, isAdmin, JWT_SECRET } from "./auth.js";
 
 const app  = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
@@ -28,7 +30,7 @@ app.post("/auth/login", async (req, res) => {
     return res.status(400).json({ error: "Username e password são obrigatórios." });
   }
 
-  const user = findUserByUsername(username);
+  const user = await findUserByUsername(username);
 
   if (!user) {
     return res.status(401).json({ error: "Credenciais inválidas." });
@@ -49,18 +51,18 @@ app.post("/auth/login", async (req, res) => {
   res.json({ token, role: user.role, username: user.username });
 });
 
-// ── GET /products — todos podem ver ──────────────────────────
-app.get("/products", authenticate, (req, res) => {
+// ── GET /products ─────────────────────────────────────────────
+app.get("/products", authenticate, async (req, res) => {
   try {
-    const products = getAllProducts();
+    const products = await getAllProducts();
     res.json(products);
   } catch {
     res.status(500).json({ error: "Erro ao buscar produtos." });
   }
 });
 
-// ── POST /products — admin e operator podem adicionar ─────────
-app.post("/products", authenticate, (req, res) => {
+// ── POST /products ────────────────────────────────────────────
+app.post("/products", authenticate, async (req, res) => {
   const { name, price, quantity, type } = req.body;
 
   if (!name || !price || !quantity || !type) {
@@ -68,16 +70,16 @@ app.post("/products", authenticate, (req, res) => {
   }
 
   try {
-    const id = insertProduct(name, parseFloat(price), parseInt(quantity), type);
+    const id = await insertProduct(name, parseFloat(price), parseInt(quantity), type);
     res.status(201).json({ id, name, price, quantity, type });
   } catch {
     res.status(500).json({ error: "Erro ao salvar produto." });
   }
 });
 
-// ── PUT /products/:id — admin e operator podem editar ─────────
-app.put("/products/:id", authenticate, (req, res) => {
-  const { id }                    = req.params;
+// ── PUT /products/:id ─────────────────────────────────────────
+app.put("/products/:id", authenticate, async (req, res) => {
+  const { id } = req.params;
   const { name, price, quantity, type } = req.body;
 
   if (!name || !price || !quantity || !type) {
@@ -85,8 +87,8 @@ app.put("/products/:id", authenticate, (req, res) => {
   }
 
   try {
-    const result = updateProduct(parseInt(id), name, parseFloat(price), parseInt(quantity), type);
-    if (result.changes === 0) {
+    const rowCount = await updateProduct(parseInt(id), name, parseFloat(price), parseInt(quantity), type);
+    if (rowCount === 0) {
       return res.status(404).json({ error: "Produto não encontrado." });
     }
     res.json({ id, name, price, quantity, type });
@@ -95,13 +97,13 @@ app.put("/products/:id", authenticate, (req, res) => {
   }
 });
 
-// ── DELETE /products/:id — apenas admin pode deletar ──────────
-app.delete("/products/:id", authenticate, isAdmin, (req, res) => {
+// ── DELETE /products/:id — apenas admin ───────────────────────
+app.delete("/products/:id", authenticate, isAdmin, async (req, res) => {
   const { id } = req.params;
 
   try {
-    const result = deleteProduct(parseInt(id));
-    if (result.changes === 0) {
+    const rowCount = await deleteProduct(parseInt(id));
+    if (rowCount === 0) {
       return res.status(404).json({ error: "Produto não encontrado." });
     }
     res.json({ message: "Produto removido." });
@@ -110,17 +112,17 @@ app.delete("/products/:id", authenticate, isAdmin, (req, res) => {
   }
 });
 
-// ── GET /users — apenas admin pode listar usuários ────────────
-app.get("/users", authenticate, isAdmin, (req, res) => {
+// ── GET /users — apenas admin ─────────────────────────────────
+app.get("/users", authenticate, isAdmin, async (req, res) => {
   try {
-    const users = getAllUsers();
+    const users = await getAllUsers();
     res.json(users);
   } catch {
     res.status(500).json({ error: "Erro ao buscar usuários." });
   }
 });
 
-// ── POST /users — apenas admin pode criar usuários ────────────
+// ── POST /users — apenas admin ────────────────────────────────
 app.post("/users", authenticate, isAdmin, async (req, res) => {
   const { username, password, role } = req.body;
 
@@ -132,27 +134,27 @@ app.post("/users", authenticate, isAdmin, async (req, res) => {
     return res.status(400).json({ error: "Role inválido. Use: admin ou operator." });
   }
 
-  const existing = findUserByUsername(username);
+  const existing = await findUserByUsername(username);
   if (existing) {
     return res.status(409).json({ error: "Username já existe." });
   }
 
   try {
     const hashed = await bcrypt.hash(password, 10);
-    const id     = createUser(username, hashed, role);
+    const id     = await createUser(username, hashed, role);
     res.status(201).json({ id, username, role });
   } catch {
     res.status(500).json({ error: "Erro ao criar usuário." });
   }
 });
 
-// ── DELETE /users/:id — apenas admin pode deletar usuários ────
-app.delete("/users/:id", authenticate, isAdmin, (req, res) => {
+// ── DELETE /users/:id — apenas admin ─────────────────────────
+app.delete("/users/:id", authenticate, isAdmin, async (req, res) => {
   const { id } = req.params;
 
   try {
-    const result = deleteUser(parseInt(id));
-    if (result.changes === 0) {
+    const rowCount = await deleteUser(parseInt(id));
+    if (rowCount === 0) {
       return res.status(404).json({ error: "Usuário não encontrado." });
     }
     res.json({ message: "Usuário removido." });
