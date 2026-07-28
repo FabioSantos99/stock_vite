@@ -166,3 +166,18 @@ app.delete("/users/:id", authenticate, isAdmin, async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
+
+
+app.get("/setup", async (req, res) => {
+  try {
+    const existing = await findUserByUsername("admin");
+    if (existing) {
+      return res.json({ message: "Admin já existe." });
+    }
+    const hashed = await bcrypt.hash("admin123", 10);
+    await createUser("admin", hashed, "admin");
+    res.json({ message: "Admin criado! Username: admin / Password: admin123" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
