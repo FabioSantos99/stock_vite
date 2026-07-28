@@ -4,7 +4,7 @@ const loginError = document.querySelector("#login-error");
 
 // Se já tiver token válido, vai direto para o inventário
 if (localStorage.getItem("token")) {
-  window.location.href = "index.html";
+  window.location.replace("index.html");
 }
 
 loginBtn.addEventListener("click", async () => {
@@ -35,7 +35,8 @@ loginBtn.addEventListener("click", async () => {
     localStorage.setItem("role", data.role);
     localStorage.setItem("username", data.username);
 
-    window.location.href = "index.html";
+      window.location.replace("index.html");
+;
   } catch {
     showError("Servidor indisponível. Tente novamente.");
   }
