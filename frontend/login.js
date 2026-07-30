@@ -1,4 +1,5 @@
-const BASE_URL   = "http://localhost:3000";
+const BASE_URL = "https://stock-vite.onrender.com";
+
 const loginBtn   = document.querySelector("#login-btn");
 const loginError = document.querySelector("#login-error");
 

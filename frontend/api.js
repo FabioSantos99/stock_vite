@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://stock-vite.onrender.com";
 
 // Envia o token JWT em toda requisição
 const authHeaders = () => ({
