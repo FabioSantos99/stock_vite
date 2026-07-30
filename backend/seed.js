@@ -1,6 +1,4 @@
-// Script para criar o primeiro admin
-// Rode uma vez: node seed.js
-
+import "dotenv/config";
 import bcrypt from "bcrypt";
 import { createUser, findUserByUsername } from "./database.js";
 
@@ -14,7 +12,7 @@ if (existing) {
 } else {
   const hashed = await bcrypt.hash(PASSWORD, 10);
   await createUser(USERNAME, hashed, "admin");
-  console.log(`Admin criado com sucesso!`);
-  console.log(`Username: ${USERNAME}`);
-  console.log(`Password: ${PASSWORD}`);
+  console.log(`Admin criado! Username: ${USERNAME} / Password: ${PASSWORD}`);
 }
+
+process.exit(0);

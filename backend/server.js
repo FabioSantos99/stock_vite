@@ -1,5 +1,4 @@
 import "dotenv/config";
-
 import express from "express";
 import cors from "cors";
 import bcrypt from "bcrypt";
@@ -21,6 +20,22 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
+
+// ── Rota temporária para criar o admin no Render ──────────────
+// DELETE após usar!
+app.get("/setup", async (req, res) => {
+  try {
+    const existing = await findUserByUsername("admin");
+    if (existing) {
+      return res.json({ message: "Admin já existe." });
+    }
+    const hashed = await bcrypt.hash("admin123", 10);
+    await createUser("admin", hashed, "admin");
+    res.json({ message: "Admin criado! Username: admin / Password: admin123" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 // ── POST /auth/login ──────────────────────────────────────────
 app.post("/auth/login", async (req, res) => {
