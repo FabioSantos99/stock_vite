@@ -1,6 +1,6 @@
 import { logout } from "./api.js";
 
-const BASE_URL  = "http://localhost:3000";
+const BASE_URL = "https://stock-vite.onrender.com";
 const token     = localStorage.getItem("token");
 const role      = localStorage.getItem("role");
 const username  = localStorage.getItem("username");
